@@ -25,7 +25,8 @@ class Sintax {
     this.disable_user_interaction = false;
     this.is_editable = true;
 
-    this.on_key_hook = [];
+    this.on_key_pre_hook = [];
+    this.on_key_post_hook = [];
   }
 
   init(file) {
@@ -58,6 +59,11 @@ class Sintax {
   }
 
   onKey(key, matches, data) {
+    if(this.on_key_pre_hook) {
+      this.on_key_pre_hook.forEach(function(func) {
+        func.bind(this)(key);      }.bind(this))
+    }
+
     if(key === "CTRL_C") {
       process.exit();
     }
@@ -78,10 +84,10 @@ class Sintax {
       }
     }
 
-    if(this.on_key_hook) {
-      this.on_key_hook.forEach(function(func) {
-        func.bind(this)();
-      })
+    if(this.on_key_post_hook) {
+      this.on_key_post_hook.forEach(function(func) {
+        func.bind(this)(key);
+      }.bind(this))
     }
   }
 
