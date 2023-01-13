@@ -9,6 +9,6 @@
   "author": "Novaya Finch",
   "license": "ISC",
   "dependencies": {
-    "terminal-kit": "^1.34.5"
+    "terminal-kit": "^2.1.8"
   }
 }
